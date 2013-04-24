@@ -7,14 +7,18 @@ Bundler.require
 
 require 'active_record'
 require 'paperclip_duplicate_check'
+require 'rack'
+require 'rack/test'
 
-Paperclip::Railtie.insert
+Rails = OpenStruct.new(root: Pathname(Dir.getwd))
+
 ActiveRecord::Base.establish_connection(
   adapter:  'sqlite3',
   database: 'test.sqlite'
 )
 
 class Person < ActiveRecord::Base
+  include Paperclip::Glue
   include CheckForDuplicateAttachedFile
 
   has_attached_file :photo,
@@ -44,7 +48,5 @@ RSpec.configure do |config|
         photo_fingerprint VARCHAR(64)
       )
     SQL
-
-    Rails.stub!(:root).and_return(Pathname(Dir.getwd))
   end
 end
