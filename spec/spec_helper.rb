@@ -5,12 +5,10 @@ require 'bundler'
 Bundler.require :development
 Bundler.require
 
-require 'active_record'
+require 'rails/all'
 require 'paperclip_duplicate_check'
 require 'rack'
 require 'rack/test'
-
-Rails = OpenStruct.new(root: Pathname(Dir.getwd))
 
 ActiveRecord::Base.establish_connection(
   adapter:  'sqlite3',
@@ -27,7 +25,9 @@ class Person < ActiveRecord::Base
                                logbook: '32x32#',
                                stat:    '64x64#',
                              },
-                    storage: :filesystem
+                    storage: :filesystem,
+                    path: './tmp/:attachment/:style.:extension'
+  validates_attachment_content_type :photo, content_type: /^image\//
   check_for_duplicate_attached_file :photo
 end
 

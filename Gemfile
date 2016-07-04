@@ -6,7 +6,7 @@ group :development do
   # TESTS
   gem 'rspec'
   gem 'sqlite3'
-  gem 'rails'
+  gem 'rails', '>= 5.0'
 
   # DOCS
   gem 'yard'
@@ -14,5 +14,5 @@ group :development do
 
   # DEVELOPMENT
   gem 'bundler'
-  gem 'jeweler'
+  gem 'juwelier'
 end
